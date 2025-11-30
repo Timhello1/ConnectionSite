@@ -1,7 +1,8 @@
 'use client';
 
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
 
 interface HeaderProps {
   sidebarOpen?: boolean;
@@ -31,6 +32,13 @@ export default function Header({ sidebarOpen = true, onToggle }: HeaderProps) {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Connection Compendium
         </Typography>
+        <Button
+          color="inherit"
+          startIcon={<LoginIcon />}
+          sx={{ ml: 2 }}
+        >
+          Login
+        </Button>
       </Toolbar>
     </AppBar>
   );

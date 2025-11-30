@@ -39,26 +39,28 @@ export default function Sidebar({ open, onToggle, onClose, variant = 'persistent
   }, {} as Record<string, typeof navItems>);
 
   const drawerContent = (
-    <Box
+      <Box
       sx={{
-        width: 280,
+        width: '100%',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         bgcolor: 'background.paper',
-        pt: 1,
+        pt: open ? 1 : 1,
+        pb: open ? 0 : 1,
         overflow: 'hidden',
+        alignItems: open ? 'stretch' : 'center',
       }}
     >
       {/* Navigation List - Scrollable */}
-      {open && (
-        <Box 
-          sx={{ 
-            flex: 1, 
-            overflow: 'hidden', 
-            minHeight: 0,
-          }}
-        >
+      <Box 
+        sx={{ 
+          flex: 1, 
+          overflow: 'hidden', 
+          minHeight: 0,
+        }}
+      >
+        {open ? (
           <CustomScrollbar>
             {Object.entries(groupedItems).map(([group, items]) => (
               <SidebarNavGroup
@@ -67,11 +69,35 @@ export default function Sidebar({ open, onToggle, onClose, variant = 'persistent
                 items={items}
                 activePath={pathname}
                 onNavigate={handleNavigation}
+                sidebarOpen={open}
               />
             ))}
           </CustomScrollbar>
-        </Box>
-      )}
+        ) : (
+          <Box
+            sx={{
+              height: '100%',
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              scrollbarWidth: 'none',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+            }}
+          >
+            {Object.entries(groupedItems).map(([group, items]) => (
+              <SidebarNavGroup
+                key={group}
+                group={group}
+                items={items}
+                activePath={pathname}
+                onNavigate={handleNavigation}
+                sidebarOpen={open}
+              />
+            ))}
+          </Box>
+        )}
+      </Box>
 
       {/* Footer - Fixed at bottom */}
       {open && (
@@ -103,10 +129,11 @@ export default function Sidebar({ open, onToggle, onClose, variant = 'persistent
     return (
       <Drawer
         variant="persistent"
-        open={open}
+        open={true}
         sx={{
           width: open ? 280 : 64,
           flexShrink: 0,
+          margin: 0,
           '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
@@ -115,9 +142,11 @@ export default function Sidebar({ open, onToggle, onClose, variant = 'persistent
             transition: 'width 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
             width: open ? 280 : 64,
             overflowX: 'hidden',
-            overflowY: 'hidden',
+            overflowY: 'auto',
             top: 0,
             height: '100%',
+            margin: 0,
+            padding: 0,
           },
         }}
       >

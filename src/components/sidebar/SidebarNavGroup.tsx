@@ -9,6 +9,7 @@ interface SidebarNavGroupProps {
   items: NavItemConfig[];
   activePath: string;
   onNavigate: (path: string) => void;
+  sidebarOpen: boolean;
 }
 
 export default function SidebarNavGroup({
@@ -16,10 +17,18 @@ export default function SidebarNavGroup({
   items,
   activePath,
   onNavigate,
+  sidebarOpen,
 }: SidebarNavGroupProps) {
   return (
-    <List disablePadding>
-      {group !== 'Main' && (
+    <List 
+      disablePadding
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: sidebarOpen ? 'stretch' : 'center',
+      }}
+    >
+      {sidebarOpen && group !== 'Main' && (
         <ListSubheader
           disableSticky
           sx={{
@@ -44,6 +53,7 @@ export default function SidebarNavGroup({
           item={item}
           isActive={activePath === item.path}
           onClick={() => onNavigate(item.path)}
+          sidebarOpen={sidebarOpen}
         />
       ))}
     </List>

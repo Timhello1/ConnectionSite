@@ -1,10 +1,12 @@
 'use client';
 
-import { AppBar, Toolbar, Typography, IconButton, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button, Box, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 import LoginDialog from '../auth/LoginDialog';
 
@@ -16,6 +18,7 @@ interface HeaderProps {
 export default function Header({ sidebarOpen = true, onToggle }: HeaderProps) {
   const { user, logout } = useAuth();
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -23,6 +26,14 @@ export default function Header({ sidebarOpen = true, onToggle }: HeaderProps) {
     } catch (error) {
       console.error('Error logging out:', error);
     }
+  };
+
+  const handleProfileClick = () => {
+    router.push('/profile');
+  };
+
+  const handleSettingsClick = () => {
+    router.push('/settings');
   };
 
   return (
@@ -49,17 +60,41 @@ export default function Header({ sidebarOpen = true, onToggle }: HeaderProps) {
             Connection Compendium
           </Typography>
           {user ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography variant="body2" sx={{ display: { xs: 'none', sm: 'block' } }}>
-                {user.email}
-              </Typography>
-              <Button
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <IconButton
                 color="inherit"
-                startIcon={<LogoutIcon />}
-                onClick={handleLogout}
+                onClick={handleSettingsClick}
+                aria-label="settings"
+                sx={{
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
               >
-                Logout
-              </Button>
+                <SettingsIcon />
+              </IconButton>
+              <IconButton
+                color="inherit"
+                onClick={handleProfileClick}
+                aria-label="profile"
+                sx={{ 
+                  p: 0.5,
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
+              >
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: 'primary.light',
+                    color: 'primary.dark',
+                  }}
+                >
+                  <AccountCircleIcon />
+                </Avatar>
+              </IconButton>
             </Box>
           ) : (
             <Button

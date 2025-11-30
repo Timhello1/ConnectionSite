@@ -41,28 +41,42 @@ export default function AppLayout({ children }: AppLayoutProps) {
   };
 
   // Render a simple placeholder during SSR to prevent hydration mismatch
+  // Match the client structure exactly
   if (!mounted) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
         <Header sidebarOpen={true} onToggle={handleDrawerToggle} />
-        <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden', mt: '64px' }}>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              width: '100%',
-              ml: 0,
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <CustomScrollbar>
-              <Box sx={{ p: 3 }}>
-                {children}
-              </Box>
-            </CustomScrollbar>
-          </Box>
+        <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden', mt: '64px', gap: 0 }}>
+          <Sidebar
+            open={true}
+            onToggle={handleDrawerToggle}
+            onClose={handleDrawerClose}
+            variant="persistent"
+          />
+           <Box
+          component="main"
+          sx={{
+            position: 'absolute',
+            left: {
+              xs: 0,
+              md: sidebarOpen ? 280 : 64,
+            },
+            right: 0,
+            top: 0,
+            bottom: 0,
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            transition: 'left 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+        >
+          <CustomScrollbar>
+            <Box sx={{ height: '100%', width: '100%' }}>
+              {children}
+            </Box>
+          </CustomScrollbar>
+        </Box>
         </Box>
       </Box>
     );
@@ -71,33 +85,52 @@ export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       <Header sidebarOpen={sidebarOpen} onToggle={handleDrawerToggle} />
-      <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden', mt: '64px' }}>
-        <Sidebar
-          open={sidebarOpen}
-          onToggle={handleDrawerToggle}
-          onClose={handleDrawerClose}
-          variant={isMobile ? 'temporary' : 'persistent'}
-        />
-        <Box
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          flex: 1, 
+          overflow: 'hidden', 
+          mt: '64px', 
+          gap: 0,
+          position: 'relative',
+        }}
+      >
+        {!isMobile && (
+          <Sidebar
+            open={sidebarOpen}
+            onToggle={handleDrawerToggle}
+            onClose={handleDrawerClose}
+            variant="persistent"
+          />
+        )}
+        {isMobile && (
+          <Sidebar
+            open={sidebarOpen}
+            onToggle={handleDrawerToggle}
+            onClose={handleDrawerClose}
+            variant="temporary"
+          />
+        )}
+         <Box
           component="main"
           sx={{
-            flexGrow: 1,
-            width: { 
-              xs: '100%',
-              md: sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 64px)',
-            },
-            ml: { 
+            position: 'absolute',
+            left: {
               xs: 0,
-              md: sidebarOpen ? '280px' : '64px',
+              md: sidebarOpen ? 280 : 64,
             },
-            transition: 'all 0.3s ease',
+            right: 0,
+            top: 0,
+            bottom: 0,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
+            height: '100%',
+            transition: 'left 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         >
           <CustomScrollbar>
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ height: '100%', width: '100%' }}>
               {children}
             </Box>
           </CustomScrollbar>

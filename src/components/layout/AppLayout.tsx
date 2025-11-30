@@ -1,7 +1,7 @@
 'use client';
 
-import { Box, useMediaQuery, useTheme } from '@mui/material';
-import { useState } from 'react';
+import { Box } from '@mui/material';
+import { useState, useEffect } from 'react';
 import Header from '../header/Header';
 import Sidebar from '../sidebar/Sidebar';
 import CustomScrollbar from '../scrollbar/CustomScrollbar';
@@ -11,9 +11,24 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    setMounted(true);
+    // Check if mobile after mount
+    const checkMobile = () => {
+      const isMobileView = window.innerWidth < 960; // md breakpoint
+      setIsMobile(isMobileView);
+      setSidebarOpen(!isMobileView);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleDrawerToggle = () => {
     setSidebarOpen(!sidebarOpen);
@@ -24,6 +39,34 @@ export default function AppLayout({ children }: AppLayoutProps) {
       setSidebarOpen(false);
     }
   };
+
+  // Render a simple placeholder during SSR to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+        <Header sidebarOpen={true} onToggle={handleDrawerToggle} />
+        <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden', mt: '64px' }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              width: '100%',
+              ml: 0,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <CustomScrollbar>
+              <Box sx={{ p: 3 }}>
+                {children}
+              </Box>
+            </CustomScrollbar>
+          </Box>
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>

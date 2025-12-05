@@ -28,6 +28,7 @@ export default function SidebarNavItem({
       disablePadding 
       sx={{ 
         px: sidebarOpen ? 1.5 : 0,
+        pr: sidebarOpen ? 2.5 : 0,
         display: 'flex',
         justifyContent: 'center',
       }}
@@ -42,7 +43,7 @@ export default function SidebarNavItem({
           height: sidebarOpen ? 48 : 48,
           justifyContent: sidebarOpen ? 'flex-start' : 'center',
           alignItems: 'center',
-          px: sidebarOpen ? 2 : 0,
+          px: sidebarOpen ? 2 : 0,  
           py: sidebarOpen ? 1 : 0,
           mx: sidebarOpen ? 0 : 0.5,
           width: sidebarOpen ? '100%' : 48,

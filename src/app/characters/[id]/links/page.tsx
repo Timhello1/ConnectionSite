@@ -4,12 +4,6 @@ import { Box, Typography, Paper, List, ListItem, ListItemText, Link } from '@mui
 import { useParams, useRouter } from 'next/navigation';
 import { mockCharacters } from '../../../../data/mockCharacters';
 
-export function generateStaticParams() {
-  return mockCharacters.map((character) => ({
-    id: character.id,
-  }));
-}
-
 export default function CharacterLinksPage() {
   const params = useParams();
   const router = useRouter();

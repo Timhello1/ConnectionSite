@@ -1,15 +1,14 @@
 'use client';
 
+import { Suspense, useState, useEffect } from 'react';
 import { Box, CircularProgress } from '@mui/material';
-import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import CharacterList from '../../components/characters/CharacterList';
 import CharacterDetail from '../../components/characters/CharacterDetail';
 import { Character } from '../../types/character';
 import { useCharacters } from '../../hooks/useCharacters';
 
-export default function CharactersPage() {
+function CharactersContent() {
   const searchParams = useSearchParams();
   const { characters, loading, refetch } = useCharacters();
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
@@ -38,5 +37,17 @@ export default function CharactersPage() {
       />
       <CharacterDetail character={selectedCharacter} />
     </Box>
+  );
+}
+
+export default function CharactersPage() {
+  return (
+    <Suspense fallback={
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <CircularProgress />
+      </Box>
+    }>
+      <CharactersContent />
+    </Suspense>
   );
 }

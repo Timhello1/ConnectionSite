@@ -17,26 +17,25 @@ export const theme = createTheme({
     },
     background: {
       default: '#1c1917', // stone-900
-      paper: 'rgba(254, 243, 199, 0.1)', // amber-50 with opacity
+      paper: '#292524', // stone-800 – solid, no tint
     },
     text: {
-      primary: '#fef3c7', // amber-100
-      secondary: '#fde68a', // amber-200
+      primary: '#fafaf9',   // stone-50 – main content
+      secondary: '#a8a29e', // stone-400 – muted, labels, inactive icons
     },
+    divider: 'rgba(255, 255, 255, 0.08)',
   },
   typography: {
     fontFamily: [
-      'var(--font-geist-sans)',
-      'Arial',
-      'Helvetica',
+      'var(--font-sans)',
+      'system-ui',
       'sans-serif',
     ].join(','),
     h1: {
       fontSize: '4.5rem',
       fontWeight: 700,
       lineHeight: 1.2,
-      color: '#fef3c7',
-      textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+      color: '#fafaf9',
       '@media (min-width:600px)': {
         fontSize: '5rem',
       },
@@ -44,7 +43,7 @@ export const theme = createTheme({
     h2: {
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#fef3c7',
+      color: '#fafaf9',
       '@media (min-width:600px)': {
         fontSize: '3rem',
       },
@@ -52,27 +51,46 @@ export const theme = createTheme({
     h3: {
       fontSize: '1.75rem',
       fontWeight: 700,
-      color: '#fef3c7',
+      color: '#fafaf9',
     },
     h5: {
-      color: '#fde68a',
+      color: '#a8a29e',
       fontStyle: 'italic',
       fontFamily: 'serif',
     },
     h6: {
-      color: '#fbbf24',
-      fontFamily: 'helvetica',
+      color: '#fafaf9',
+      fontWeight: 600,
     },
     body1: {
       fontSize: '1.125rem',
       lineHeight: 1.75,
-      color: '#fde68a',
+      color: '#e7e5e4',
     },
     body2: {
-      color: '#fde68a',
+      color: '#a8a29e',
     },
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#292524',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: 'none',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          '& .MuiListItemIcon-root': {
+            color: '#a8a29e',
+            minWidth: 32,
+          },
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         body: {

@@ -23,13 +23,13 @@ export default function ProfilePage() {
       >
           <Avatar
             sx={{
-              width: 120,
-              height: 120,
-              bgcolor: 'primary.light',
-              color: 'primary.dark',
+              width: 96,
+              height: 96,
+              bgcolor: '#57534e',
+              color: '#fafaf9',
             }}
           >
-            <AccountCircleIcon sx={{ fontSize: 80 }} />
+            <AccountCircleIcon sx={{ fontSize: 56 }} />
           </Avatar>
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h3" component="h1" gutterBottom>

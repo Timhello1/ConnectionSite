@@ -53,32 +53,31 @@ export default function SidebarNavItem({
             bgcolor: 'primary.main',
             color: 'secondary.main',
             '&:hover': {
-              bgcolor: 'primary.light',
+              bgcolor: 'primary.dark',
             },
             '& .MuiListItemIcon-root': {
               color: 'secondary.main',
             },
           },
           '&:hover': {
-            bgcolor: sidebarOpen ? 'action.hover' : 'rgba(217, 119, 6, 0.1)',
+            bgcolor: sidebarOpen ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.04)',
           },
         }}
         title={!sidebarOpen ? item.title : undefined}
       >
         <ListItemIcon
           sx={{
-            minWidth: sidebarOpen ? 40 : 0,
-            width: sidebarOpen ? 40 : '100%',
+            minWidth: sidebarOpen ? 36 : 0,
+            width: sidebarOpen ? 36 : '100%',
             justifyContent: 'center',
             alignItems: 'center',
             color: isActive ? 'secondary.main' : 'text.secondary',
-            transition: 'all 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'color 0.2s ease',
             display: 'flex',
             marginRight: sidebarOpen ? 1 : 0,
-            marginLeft: sidebarOpen ? 0 : 0,
           }}
         >
-          <IconComponent fontSize="medium" />
+          <IconComponent sx={{ fontSize: 22 }} />
         </ListItemIcon>
         <ListItemText
           primary={item.title}

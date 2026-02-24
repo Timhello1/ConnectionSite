@@ -11,6 +11,7 @@ import {
     Image as ImageIcon,
     Article as ArticleIcon,
     Home as HomeIcon,
+    CloudDownload as CloudDownloadIcon,
   } from '@mui/icons-material';
   import { SvgIconComponent } from '@mui/icons-material';
   
@@ -35,6 +36,7 @@ import {
     { title: 'NPCs & Organizations', icon: BusinessIcon, path: '/npcs', group: 'World' },
     { title: 'Session Calendar', icon: CalendarIcon, path: '/calendar', group: 'Tools' },
     { title: 'Art & Media', icon: ImageIcon, path: '/art', group: 'Tools' },
+    { title: 'Seed database (2024 SRD)', icon: CloudDownloadIcon, path: '/admin/seed', group: 'Tools' },
   ];
   
   export default navItems;

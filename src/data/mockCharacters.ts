@@ -8,9 +8,12 @@ export const mockCharacters: Character[] = [
     status: 'active',
     class: 'Ranger',
     specialization: 'Beast Master',
+    race: 'Human',
+    background: 'Folk Hero',
+    playerName: 'DM',
     media: {
       type: 'image',
-      url: '/placeholder-character.jpg',
+      url: '', // Paste any public image URL (Imgur, imgbb, etc.)
       alt: 'Aragorn the Ranger',
     },
     npcLinks: [

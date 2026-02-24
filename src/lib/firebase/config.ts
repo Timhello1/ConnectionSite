@@ -4,12 +4,12 @@ import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBUTBPgbRsO9TUn4SEYxVRkCqL9fuciCE4",
-  authDomain: "connection-fc2c6.firebaseapp.com",
-  projectId: "connection-fc2c6",
-  storageBucket: "connection-fc2c6.firebasestorage.app",
-  messagingSenderId: "2208580642",
-  appId: "1:2208580642:web:2f8f5b3022fe428020b67b",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? "AIzaSyBUTBPgbRsO9TUn4SEYxVRkCqL9fuciCE4",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ?? "connection-fc2c6.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "connection-fc2c6",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ?? "connection-fc2c6.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? "2208580642",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ?? "1:2208580642:web:2f8f5b3022fe428020b67b",
 };
 
 // Debug: Log what we're getting (only in browser, dev mode)

@@ -17,6 +17,7 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useAuth } from '../../contexts/AuthContext';
+import { getAuthErrorMessage } from '../../lib/firebase/authErrors';
 
 interface LoginDialogProps {
   open: boolean;
@@ -57,8 +58,8 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
       onClose();
       setEmail('');
       setPassword('');
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err) {
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -70,8 +71,8 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
     try {
       await loginWithGoogle();
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err) {
+      setError(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -85,44 +86,33 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 3,
-          background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(146, 64, 14, 0.1) 100%)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(217, 119, 6, 0.3)',
+          borderRadius: 2,
+          bgcolor: 'background.paper',
+          border: '1px solid',
+          borderColor: 'divider',
         },
       }}
     >
       <DialogContent sx={{ p: 0, position: 'relative' }}>
         <IconButton
           onClick={onClose}
+          size="small"
           sx={{
             position: 'absolute',
-            right: 8,
-            top: 8,
+            right: 12,
+            top: 12,
             zIndex: 1,
             color: 'text.secondary',
           }}
         >
-          <CloseIcon />
+          <CloseIcon fontSize="small" />
         </IconButton>
 
-        <Box sx={{ p: 4, pt: 6 }}>
-          {/* Header with animated title */}
-          <Box sx={{ mb: 4, textAlign: 'center' }}>
+        <Box sx={{ p: 4, pt: 5 }}>
+          <Box sx={{ mb: 3.5, textAlign: 'center' }}>
             <Fade in={!isTransitioning} timeout={300}>
               <Box>
-                <Typography
-                  variant="h4"
-                  component="h2"
-                  sx={{
-                    fontWeight: 700,
-                    mb: 1,
-                    background: 'linear-gradient(135deg, #fbbf24 0%, #d97706 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
+                <Typography variant="h5" component="h2" sx={{ fontWeight: 600, mb: 0.5, color: 'text.primary' }}>
                   {isSignUp ? 'Create Account' : 'Welcome Back'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -213,24 +203,21 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
                   variant="contained"
                   disabled={loading}
                   sx={{
-                    py: 1.5,
-                    mb: 3,
-                    borderRadius: 2,
+                    py: 1.25,
+                    mb: 2.5,
+                    borderRadius: 1.5,
                     textTransform: 'none',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    boxShadow: 3,
-                    '&:hover': {
-                      boxShadow: 6,
-                    },
+                    fontWeight: 500,
+                    boxShadow: 'none',
+                    '&:hover': { boxShadow: 'none', bgcolor: 'primary.dark' },
                   }}
                 >
                   {loading ? 'Please wait...' : isSignUp ? 'Create Account' : 'Sign In'}
                 </Button>
 
-                <Divider sx={{ my: 3 }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ px: 2 }}>
-                    OR
+                <Divider sx={{ my: 2.5 }}>
+                  <Typography variant="caption" color="text.secondary" sx={{ px: 1.5 }}>
+                    or
                   </Typography>
                 </Divider>
 
@@ -239,17 +226,18 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
                   variant="outlined"
                   onClick={handleGoogleLogin}
                   disabled={loading}
-                  startIcon={<GoogleIcon />}
+                  startIcon={<GoogleIcon sx={{ fontSize: 20 }} />}
                   sx={{
-                    py: 1.5,
-                    mb: 3,
-                    borderRadius: 2,
+                    py: 1.25,
+                    mb: 2.5,
+                    borderRadius: 1.5,
                     textTransform: 'none',
-                    fontSize: '1rem',
+                    fontWeight: 500,
                     borderColor: 'divider',
+                    color: 'text.primary',
                     '&:hover': {
-                      borderColor: 'primary.main',
-                      bgcolor: 'rgba(217, 119, 6, 0.1)',
+                      borderColor: 'text.secondary',
+                      bgcolor: 'rgba(255, 255, 255, 0.04)',
                     },
                   }}
                 >
@@ -260,12 +248,13 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
                   <Button
                     onClick={handleModeSwitch}
                     disabled={loading || isTransitioning}
+                    variant="text"
+                    size="small"
                     sx={{
                       textTransform: 'none',
-                      color: 'primary.light',
-                      '&:hover': {
-                        bgcolor: 'rgba(217, 119, 6, 0.1)',
-                      },
+                      color: 'text.secondary',
+                      fontWeight: 500,
+                      '&:hover': { bgcolor: 'transparent', color: 'text.primary' },
                     }}
                   >
                     {isSignUp
